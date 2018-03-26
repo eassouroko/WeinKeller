@@ -7,12 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 //import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.model.*;
 import com.repository.*;
 
 
-
+@Controller
 @SpringBootApplication
 @EntityScan("com.model")
 @EnableJpaRepositories("com.repository")
@@ -25,7 +27,10 @@ public class WeinOnlineApplication implements CommandLineRunner{
 	private WineCategoryRepository catrep;
 	@Autowired
 	private WineRepository wineRep;
-
+	 @RequestMapping("/")
+	    public String welcome() {
+	        return "home";
+	    }
 	public static void main(String[] args) {
 		SpringApplication.run(WeinOnlineApplication.class, args);
 	}
