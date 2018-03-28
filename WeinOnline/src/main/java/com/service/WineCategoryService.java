@@ -1,15 +1,19 @@
 package com.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.model.WineCategory;
 import com.repository.WineCategoryRepository;
 @Service("wineCategoryService")
 public class WineCategoryService {
-private WineCategoryRepository wineCategoryRepository;
+	 @Autowired
+	private WineCategoryRepository wineCategoryRepository;
 	
-    @Autowired
+   
     public WineCategoryService(WineCategoryRepository wineCategoryRepository) { 
       this.wineCategoryRepository = wineCategoryRepository;
     }
@@ -38,5 +42,11 @@ private WineCategoryRepository wineCategoryRepository;
 		
 		return  exists;
 	}
+	
+	public List<WineCategory> searchWithNativeQuery(@Param("searchTerm") String searchTerm){
+		return this.wineCategoryRepository.searchWithNativeQuery(searchTerm);
+	}
+	
+	
 
 }

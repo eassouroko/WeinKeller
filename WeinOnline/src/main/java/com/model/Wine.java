@@ -32,9 +32,42 @@ public class Wine implements Serializable {
 	@GeneratedValue
 	private long id;
 	private String wineCode;
+	private String wineName;
+	private String wineDescription;
+	private double wineUnitPrice;
+	private double wineSize;
+	private double alcoolContent;
+	private int numberPerPackage;
+	private double packageWeight;
+	private String wineColor;
+	private int quantity;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_Winecategory")
 	private WineCategory wineCategory;
+
+
+	
+	
+	/* Default Constructor*/
+	public Wine() {
+		super();
+	}
+
+	public Wine(WineCategory wineCategory, String windeCode, String wineName, String wineDescription, double wineUnitPrice,
+			double wineSize, double alcoolContent, int numberPerPackage, String wineColor, double packageWeight, int quantity) {
+		super();
+		this.wineCategory = wineCategory;
+		this.wineCode = windeCode;
+		this.wineName = wineName;
+		this.wineDescription = wineDescription;
+		this.wineUnitPrice = wineUnitPrice;
+		this.wineSize = wineSize;
+		this.alcoolContent = alcoolContent;
+		this.numberPerPackage = numberPerPackage;
+		this.wineColor = wineColor;
+		this.packageWeight=packageWeight;
+		this.quantity=quantity;
+	}
 	
 	/**
 	 * @return the id
@@ -64,31 +97,18 @@ public class Wine implements Serializable {
 		this.wineCode = wineCode;
 	}
 
-	private String wineName;
-	private String wineDescription;
-	private double wineUnitPrice;
-	private double wineSize;
-	private double alcoolContent;
-	private int numberPerPackage;
-	private String wineColor;
-	
-	/* Default Constructor*/
-	public Wine() {
-		super();
+	/**
+	 * @return the packageWeight
+	 */
+	public double getPackageWeight() {
+		return packageWeight;
 	}
 
-	public Wine(WineCategory wineCategory, String windeCode, String wineName, String wineDescription, double wineUnitPrice,
-			double wineSize, double alcoolContent, int numberPerPackage, String wineColor) {
-		super();
-		this.wineCategory = wineCategory;
-		this.wineCode = windeCode;
-		this.wineName = wineName;
-		this.wineDescription = wineDescription;
-		this.wineUnitPrice = wineUnitPrice;
-		this.wineSize = wineSize;
-		this.alcoolContent = alcoolContent;
-		this.numberPerPackage = numberPerPackage;
-		this.wineColor = wineColor;
+	/**
+	 * @param packageWeight the packageWeight to set
+	 */
+	public void setPackageWeight(double packageWeight) {
+		this.packageWeight = packageWeight;
 	}
 
 	public WineCategory getWineCategory() {
@@ -158,8 +178,22 @@ public class Wine implements Serializable {
 	public void setWineColor(String wineColor) {
 		this.wineColor = wineColor;
 	}
-
 	
+	
+
+	/**
+	 * @return the quantity
+	 */
+	public int getQuantity() {
+		return quantity;
+	}
+
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -171,9 +205,12 @@ public class Wine implements Serializable {
 		long temp;
 		temp = Double.doubleToLongBits(alcoolContent);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + numberPerPackage;
-		result = prime * result + ((wineCode == null) ? 0 : wineCode.hashCode());
+		temp = Double.doubleToLongBits(packageWeight);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((wineCategory == null) ? 0 : wineCategory.hashCode());
+		result = prime * result + ((wineCode == null) ? 0 : wineCode.hashCode());
 		result = prime * result + ((wineColor == null) ? 0 : wineColor.hashCode());
 		result = prime * result + ((wineDescription == null) ? 0 : wineDescription.hashCode());
 		result = prime * result + ((wineName == null) ? 0 : wineName.hashCode());
@@ -198,17 +235,21 @@ public class Wine implements Serializable {
 		Wine other = (Wine) obj;
 		if (Double.doubleToLongBits(alcoolContent) != Double.doubleToLongBits(other.alcoolContent))
 			return false;
+		if (id != other.id)
+			return false;
 		if (numberPerPackage != other.numberPerPackage)
 			return false;
-		if (wineCode == null) {
-			if (other.wineCode != null)
-				return false;
-		} else if (!wineCode.equals(other.wineCode))
+		if (Double.doubleToLongBits(packageWeight) != Double.doubleToLongBits(other.packageWeight))
 			return false;
 		if (wineCategory == null) {
 			if (other.wineCategory != null)
 				return false;
 		} else if (!wineCategory.equals(other.wineCategory))
+			return false;
+		if (wineCode == null) {
+			if (other.wineCode != null)
+				return false;
+		} else if (!wineCode.equals(other.wineCode))
 			return false;
 		if (wineColor == null) {
 			if (other.wineColor != null)
@@ -237,11 +278,14 @@ public class Wine implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Wine [windeCode=" + wineCode + ", wineCategory=" + wineCategory + ", wineName=" + wineName
-				+ ", wineDescription=" + wineDescription + ", wineUnitPrice=" + wineUnitPrice + ", wineSize=" + wineSize
-				+ ", alcoolContent=" + alcoolContent + ", numberPerPackage=" + numberPerPackage + ", wineColor="
-				+ wineColor + "]";
+		return "Wine [id=" + id + ", wineCode=" + wineCode + ", wineName=" + wineName + ", wineDescription="
+				+ wineDescription + ", wineUnitPrice=" + wineUnitPrice + ", wineSize=" + wineSize + ", alcoolContent="
+				+ alcoolContent + ", numberPerPackage=" + numberPerPackage + ", packageWeight=" + packageWeight
+				+ ", wineColor=" + wineColor + ", wineCategory=" + wineCategory + "]";
 	}
+
+	
+
 	
 	
 	

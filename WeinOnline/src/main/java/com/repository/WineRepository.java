@@ -14,6 +14,7 @@ import com.model.Wine;
 public interface WineRepository extends JpaRepository<Wine, Long> {
 	
 	Wine findByWineCode(String wineCode);
+	public List<Wine> findByWineCategoryId(long categoryid);
 	
 	@Query(value = "SELECT * FROM wine WHERE wine_name LIKE %:searchTerm%", nativeQuery = true)
 	public List<Wine> searchWithNativeQuery(@Param("searchTerm") String searchTerm);

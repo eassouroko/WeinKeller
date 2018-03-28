@@ -1,6 +1,9 @@
 package com.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.model.Wine;
@@ -26,7 +29,7 @@ public class WineService {
 			if(!wineExists(wine)) {wineRepository.save(wine);
 			
 			}else {
-				System.out.println(wine.getWineName()+ "already exists");
+				System.out.println(wine.getWineName()+ " already exists");
 				
 			}
 		}
@@ -40,16 +43,31 @@ public class WineService {
 		
 		public void updateWine(Wine wine) {
 			
-			Wine w = this.wineRepository.getOne(wine.getId());
+			//Wine w = this.wineRepository.getOne(wine.getId());
+			this.wineRepository.flush();
 			
-			
-			this.wineRepository.save(w);
+			//this.wineRepository.save(w);
 			
 		}
 		
 		public void deleteWine(Wine wine) {
 			
 			this.wineRepository.findByWineCode(wine.getWineCode());
+		}
+		
+		public List<Wine> searchWithNativeQuery(@Param("searchTerm") String searchTerm){
+			return wineRepository.searchWithNativeQuery(searchTerm);
+			
+			
+		}
+		public List<Wine> searchWithJPQLQuery(@Param("searchTerm") String searchTerm){
+			
+			return wineRepository.searchWithJPQLQuery(searchTerm);
+		}
+		
+		public List<Wine> findByWineCategoryId(Long categoryid){
+			return this.wineRepository.findByWineCategoryId(categoryid);
+			//this.wineRepository.
 		}
 
 }
