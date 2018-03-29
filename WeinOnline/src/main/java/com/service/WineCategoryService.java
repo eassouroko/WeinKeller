@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.model.WineCategory;
 import com.repository.WineCategoryRepository;
 @Service("wineCategoryService")
-public class WineCategoryService {
+public class WineCategoryService implements IWineCategoryService {
 	 @Autowired
 	private WineCategoryRepository wineCategoryRepository;
 	
@@ -46,6 +46,23 @@ public class WineCategoryService {
 	public List<WineCategory> searchWithNativeQuery(@Param("searchTerm") String searchTerm){
 		return this.wineCategoryRepository.searchWithNativeQuery(searchTerm);
 	}
+
+	@Override
+	public void deleteWineCategory(WineCategory wine) {
+		if(wine!=null) {this.wineCategoryRepository.delete(wine);
+		}
+		//this.wineCategoryRepository.de
+	
+		
+	}
+
+	@Override
+	public WineCategory findById(long id) {
+		
+		return this.wineCategoryRepository.findById(id);
+	}
+	
+	
 	
 	
 

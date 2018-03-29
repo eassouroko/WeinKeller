@@ -9,7 +9,7 @@ import com.model.User;
 import com.repository.UserRepository;
 
 @Service("userService")
-public class UserService {
+public class UserService implements IUserService{
 
 	private UserRepository userRepository;
 	

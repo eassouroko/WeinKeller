@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.model.*;
 import com.repository.*;
+import com.service.IWineCategoryService;
+import com.service.IWineService;
 import com.service.WineCategoryService;
 import com.service.WineService;
 
@@ -31,9 +33,9 @@ import com.service.WineService;
 public class WeinOnlineApplication implements CommandLineRunner{
 	
 	@Autowired
-	private WineCategoryService wineCategoryService;
+	private IWineCategoryService wineCategoryService;
 	@Autowired
-	private WineService wineService;
+	private IWineService wineService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(WeinOnlineApplication.class, args);
@@ -41,45 +43,8 @@ public class WeinOnlineApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
+	
 		
-		Wine wine=this.wineService.findByWineCode("V153");
-		System.out.println(wine.getWineName());
-		wine.setWineColor("White");
-		this.wineService.saveWine(wine);
-		//Wine toUpdate=this.win
-		
-		List<Wine> rosa = new ArrayList<Wine>();
-		String searchTerm= "Line";
-		rosa = this.wineService.searchWithNativeQuery(searchTerm);
-		//searchTerm does not correspond to any wine. In that case search for wine category matching the searchterm
-		if(rosa.isEmpty()) {
-			System.out.println("##############################################");
-			System.out.println("this no wine name: "+ searchTerm);
-			System.out.println("Need to check in wine category for : "+ searchTerm);
-			System.out.println("##############################################");
-			List<WineCategory> matchingCat=this.wineCategoryService.searchWithNativeQuery(searchTerm);
-			
-			if(!matchingCat.isEmpty()) {
-				
-				
-				for(int i=0; i<matchingCat.size();i++) {
-					System.out.println(matchingCat.get(i).getCategoryDescription()+ " "+this.wineService.findByWineCategoryId((matchingCat.get(i).getId())).size() );
-					//System.out.println("");
-				
-				List<Wine> list= this.wineService.findByWineCategoryId((matchingCat.get(i).getId()));
-				    for(int count=0;count<list.size();count++) {
-				    	System.out.println(list.get(count).getWineName());
-				    	
-				    	
-				    }
-				 }
-					
-				
-				
-			}
-			
-			
-		}
 
 		
 	}

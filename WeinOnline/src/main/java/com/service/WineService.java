@@ -3,6 +3,7 @@ package com.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import com.model.Wine;
 
 import com.repository.WineRepository;
 @Service("wineService")
-public class WineService {
+public class WineService implements IWineService{
 	@Autowired
 	private WineRepository wineRepository;
 	
@@ -41,12 +42,10 @@ public class WineService {
 			return exists;
 		}
 		
-		public void updateWine(Wine wine) {
-			
-			//Wine w = this.wineRepository.getOne(wine.getId());
-			this.wineRepository.flush();
-			
-			//this.wineRepository.save(w);
+		public void update(Wine wine) {
+
+			if(wine != null)
+				this.wineRepository.save(wine);
 			
 		}
 		
@@ -69,5 +68,7 @@ public class WineService {
 			return this.wineRepository.findByWineCategoryId(categoryid);
 			//this.wineRepository.
 		}
+		
+		
 
 }

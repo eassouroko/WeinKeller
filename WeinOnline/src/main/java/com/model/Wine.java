@@ -44,6 +44,7 @@ public class Wine implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_Winecategory")
 	private WineCategory wineCategory;
+	private String country;
 
 
 	
@@ -54,7 +55,7 @@ public class Wine implements Serializable {
 	}
 
 	public Wine(WineCategory wineCategory, String windeCode, String wineName, String wineDescription, double wineUnitPrice,
-			double wineSize, double alcoolContent, int numberPerPackage, String wineColor, double packageWeight, int quantity) {
+			double wineSize, double alcoolContent, int numberPerPackage, String wineColor, double packageWeight, int quantity, String country) {
 		super();
 		this.wineCategory = wineCategory;
 		this.wineCode = windeCode;
@@ -67,6 +68,7 @@ public class Wine implements Serializable {
 		this.wineColor = wineColor;
 		this.packageWeight=packageWeight;
 		this.quantity=quantity;
+		this.country=country;
 	}
 	
 	/**
@@ -195,6 +197,21 @@ public class Wine implements Serializable {
 		this.quantity = quantity;
 	}
 
+	
+	/**
+	 * @return the country
+	 */
+	public String getCountry() {
+		return country;
+	}
+
+	/**
+	 * @param country the country to set
+	 */
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -205,10 +222,12 @@ public class Wine implements Serializable {
 		long temp;
 		temp = Double.doubleToLongBits(alcoolContent);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + numberPerPackage;
 		temp = Double.doubleToLongBits(packageWeight);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + quantity;
 		result = prime * result + ((wineCategory == null) ? 0 : wineCategory.hashCode());
 		result = prime * result + ((wineCode == null) ? 0 : wineCode.hashCode());
 		result = prime * result + ((wineColor == null) ? 0 : wineColor.hashCode());
@@ -235,11 +254,18 @@ public class Wine implements Serializable {
 		Wine other = (Wine) obj;
 		if (Double.doubleToLongBits(alcoolContent) != Double.doubleToLongBits(other.alcoolContent))
 			return false;
+		if (country == null) {
+			if (other.country != null)
+				return false;
+		} else if (!country.equals(other.country))
+			return false;
 		if (id != other.id)
 			return false;
 		if (numberPerPackage != other.numberPerPackage)
 			return false;
 		if (Double.doubleToLongBits(packageWeight) != Double.doubleToLongBits(other.packageWeight))
+			return false;
+		if (quantity != other.quantity)
 			return false;
 		if (wineCategory == null) {
 			if (other.wineCategory != null)
@@ -281,9 +307,11 @@ public class Wine implements Serializable {
 		return "Wine [id=" + id + ", wineCode=" + wineCode + ", wineName=" + wineName + ", wineDescription="
 				+ wineDescription + ", wineUnitPrice=" + wineUnitPrice + ", wineSize=" + wineSize + ", alcoolContent="
 				+ alcoolContent + ", numberPerPackage=" + numberPerPackage + ", packageWeight=" + packageWeight
-				+ ", wineColor=" + wineColor + ", wineCategory=" + wineCategory + "]";
+				+ ", wineColor=" + wineColor + ", quantity=" + quantity + ", wineCategory=" + wineCategory
+				+ ", country=" + country + "]";
 	}
 
+	
 	
 
 	
